@@ -18,7 +18,8 @@
 
 <assembly>
     <id>all</id>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <!--<includeBaseDirectory>false</includeBaseDirectory>-->
+    <baseDirectory>alibaba-rocketmq-all</baseDirectory>
     <formats>
         <format>dir</format>
         <format>tar.gz</format>
