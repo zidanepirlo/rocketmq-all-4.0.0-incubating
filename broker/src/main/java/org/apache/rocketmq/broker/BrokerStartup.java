@@ -138,6 +138,11 @@ public class BrokerStartup {
 
             MixAll.properties2Object(ServerUtil.commandLine2Properties(commandLine), brokerConfig);
 
+            //本地测试需添加，设置RocketmqHome
+            if(System.getProperty("os.name").toLowerCase().indexOf("mac")>=0){
+                brokerConfig.setRocketmqHome("/Users/yuan/software/RocketMQ-3.5.8");
+            }
+
             if (null == brokerConfig.getRocketmqHome()) {
                 System.out.printf("Please set the " + MixAll.ROCKETMQ_HOME_ENV
                     + " variable in your environment to match the location of the RocketMQ installation");
