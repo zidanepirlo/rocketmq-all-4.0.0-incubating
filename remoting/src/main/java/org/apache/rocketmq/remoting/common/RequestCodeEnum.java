@@ -102,8 +102,9 @@ public enum RequestCodeEnum {
         this.desc = desc;
     }
 
-    private RequestCodeEnum(int i, String send_message) {
-
+    private RequestCodeEnum(int code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static String getDesc(final int code){
