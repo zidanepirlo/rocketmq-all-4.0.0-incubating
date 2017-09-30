@@ -120,8 +120,9 @@ public abstract class NettyRemotingAbstract {
                                 response.setOpaque(opaque);
                                 response.markResponseType();
                                 try {
-                                    //send msg to broker for ,add by yuan for test
+
                                     ctx.writeAndFlush(response);
+                                    //send msg to broker for ,add by yuan for test
                                     PLOG.info("namesrv send response:");
                                     PLOG.info(response.toString());
                                     PLOG.info("body:");
