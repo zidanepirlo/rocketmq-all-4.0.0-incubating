@@ -79,4 +79,9 @@ public class RegisterBrokerRequestHeader implements CommandCustomHeader {
     public void setBrokerId(Long brokerId) {
         this.brokerId = brokerId;
     }
+
+    public String toString(){
+        return "RegisterBrokerRequestHeader:[brokerName="+brokerName+",brokerAddr="+brokerAddr
+                +",clusterName="+clusterName+",haServerAddr="+haServerAddr+",brokerId="+Long.toString(brokerId);
+    }
 }

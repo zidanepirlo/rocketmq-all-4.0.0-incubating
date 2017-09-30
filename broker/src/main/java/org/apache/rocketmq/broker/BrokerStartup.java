@@ -124,24 +124,17 @@ public class BrokerStartup {
                     InputStream in = new BufferedInputStream(new FileInputStream(file));
                     properties = new Properties();
                     properties.load(in);
-
                     parsePropertie2SystemEnv(properties);
                     MixAll.properties2Object(properties, brokerConfig);
                     MixAll.properties2Object(properties, nettyServerConfig);
                     MixAll.properties2Object(properties, nettyClientConfig);
                     MixAll.properties2Object(properties, messageStoreConfig);
-
                     BrokerPathConfigHelper.setBrokerConfigPath(file);
                     in.close();
                 }
             }
 
             MixAll.properties2Object(ServerUtil.commandLine2Properties(commandLine), brokerConfig);
-
-            //本地测试需添加，设置RocketmqHome
-//            if(System.getProperty("os.name").toLowerCase().indexOf("mac")>=0){
-//                brokerConfig.setRocketmqHome("/Users/yuan/software/RocketMQ-3.5.8");
-//            }
 
             if (null == brokerConfig.getRocketmqHome()) {
                 System.out.printf("Please set the " + MixAll.ROCKETMQ_HOME_ENV
@@ -185,7 +178,9 @@ public class BrokerStartup {
             JoranConfigurator configurator = new JoranConfigurator();
             configurator.setContext(lc);
             lc.reset();
+
             configurator.doConfigure(brokerConfig.getRocketmqHome() + "/conf/logback_broker.xml");
+
             log = LoggerFactory.getLogger(LoggerName.BROKER_LOGGER_NAME);
 
             MixAll.printObjectProperties(log, brokerConfig);

@@ -28,6 +28,7 @@ public abstract class ServiceThread implements Runnable {
 
     protected final Thread thread;
     protected final CountDownLatch2 waitPoint = new CountDownLatch2(1);
+    // hasNotified = true indicate shutdown(),stop(),wakeup() already called, should not call waitForRunning()
     protected volatile AtomicBoolean hasNotified = new AtomicBoolean(false);
     protected volatile boolean stopped = false;
 
@@ -108,7 +109,7 @@ public abstract class ServiceThread implements Runnable {
             return;
         }
 
-        //entry to wait
+        //entry to wait, equal to CountDownLatch2(1)
         waitPoint.reset();
 
         try {
