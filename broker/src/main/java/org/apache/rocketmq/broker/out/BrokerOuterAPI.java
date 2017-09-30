@@ -36,6 +36,7 @@ import org.apache.rocketmq.common.protocol.header.namesrv.RegisterBrokerResponse
 import org.apache.rocketmq.common.protocol.header.namesrv.UnRegisterBrokerRequestHeader;
 import org.apache.rocketmq.remoting.RPCHook;
 import org.apache.rocketmq.remoting.RemotingClient;
+import org.apache.rocketmq.remoting.common.RequestCodeEnum;
 import org.apache.rocketmq.remoting.exception.RemotingCommandException;
 import org.apache.rocketmq.remoting.exception.RemotingConnectException;
 import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
@@ -153,14 +154,16 @@ public class BrokerOuterAPI {
         RegisterBrokerBody requestBody = new RegisterBrokerBody();
         requestBody.setTopicConfigSerializeWrapper(topicConfigWrapper);
         requestBody.setFilterServerList(filterServerList);
+        request.setBody(requestBody.encode());
 
         //add by yuan for test
+        log.info(RequestCodeEnum.getDesc(RequestCode.REGISTER_BROKER));
         log.info("customHeader:");
         log.info(request.readCustomHeader().toString());
         log.info("requestBody json:");
         log.info(requestBody.toJson(true));
         //end
-        request.setBody(requestBody.encode());
+
 
         if (oneway) {
             try {
