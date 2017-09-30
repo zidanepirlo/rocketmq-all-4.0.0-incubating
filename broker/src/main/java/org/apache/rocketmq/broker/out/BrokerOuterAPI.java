@@ -154,8 +154,12 @@ public class BrokerOuterAPI {
         requestBody.setTopicConfigSerializeWrapper(topicConfigWrapper);
         requestBody.setFilterServerList(filterServerList);
 
-        log.info("requestBody json");
+        log.info("customHeader:");
+        log.info(request.readCustomHeader().toString());
+        log.info("requestBody json:");
         log.info(requestBody.toJson(true));
+
+
 
         request.setBody(requestBody.encode());
 

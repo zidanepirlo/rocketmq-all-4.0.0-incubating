@@ -96,6 +96,11 @@ public class NamesrvStartup {
 
             MixAll.properties2Object(ServerUtil.commandLine2Properties(commandLine), namesrvConfig);
 
+            //for run in idea
+//            if(null == namesrvConfig.getRocketmqHome()){
+//                namesrvConfig.setRocketmqHome("/Users/yuan/RocketMQ");
+//            }
+
             if (null == namesrvConfig.getRocketmqHome()) {
                 System.out.printf("Please set the " + MixAll.ROCKETMQ_HOME_ENV
                     + " variable in your environment to match the location of the RocketMQ installation%n");
