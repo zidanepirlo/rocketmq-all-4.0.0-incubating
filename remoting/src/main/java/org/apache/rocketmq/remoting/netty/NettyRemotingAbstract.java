@@ -120,12 +120,13 @@ public abstract class NettyRemotingAbstract {
                                 response.setOpaque(opaque);
                                 response.markResponseType();
                                 try {
-                                    //send msg to broker
+                                    //send msg to broker for ,add by yuan for test
                                     ctx.writeAndFlush(response);
                                     PLOG.info("namesrv send response:");
                                     PLOG.info(response.toString());
                                     PLOG.info("body:");
                                     PLOG.info(null == response.getBody()? "null":new String(response.getBody()));
+                                    //end
                                 } catch (Throwable e) {
                                     PLOG.error("process request over, but response failed", e);
                                     PLOG.error(cmd.toString());
