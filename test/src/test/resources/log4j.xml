@@ -39,8 +39,15 @@
         </layout>
     </appender>
 
-    <root>
-        <level value="OFF"/>
-        <appender-ref ref="TOTAL"/>
-    </root>
+    <!--<logger name="org.apache.rocketmq" additivity="false">-->
+        <!--<level value="info" />-->
+        <!--<appender-ref ref="TOTAL" />-->
+        <!--<appender-ref ref="CONSOLE" />-->
+    <!--</logger>-->
+
+    <!--<root>-->
+        <!--<level value="OFF"/>-->
+        <!--<appender-ref ref="TOTAL"/>-->
+        <!--<appender-ref ref="CONSOLE"/>-->
+    <!--</root>-->
 </log4j:configuration>
