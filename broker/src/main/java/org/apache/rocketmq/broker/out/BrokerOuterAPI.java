@@ -154,13 +154,12 @@ public class BrokerOuterAPI {
         requestBody.setTopicConfigSerializeWrapper(topicConfigWrapper);
         requestBody.setFilterServerList(filterServerList);
 
+        //add by yuan for test
         log.info("customHeader:");
         log.info(request.readCustomHeader().toString());
         log.info("requestBody json:");
         log.info(requestBody.toJson(true));
-
-
-
+        //end
         request.setBody(requestBody.encode());
 
         if (oneway) {
