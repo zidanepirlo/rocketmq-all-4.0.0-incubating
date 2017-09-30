@@ -364,6 +364,7 @@ public class BrokerController {
         return result;
     }
 
+    //定义broker所有netty server服务处理的线程池
     public void registerProcessor() {
         /**
          * SendMessageProcessor
@@ -605,18 +606,22 @@ public class BrokerController {
     }
 
     public void start() throws Exception {
+
+        //启动 ConsumeQueue、commitLog 等后台线程
         if (this.messageStore != null) {
             this.messageStore.start();
         }
 
+        //启动ServerBootstrap
         if (this.remotingServer != null) {
             this.remotingServer.start();
         }
 
+        //启动ServerBootstrap
         if (this.fastRemotingServer != null) {
             this.fastRemotingServer.start();
         }
-
+        //启动netty client, Bootstrap
         if (this.brokerOuterAPI != null) {
             this.brokerOuterAPI.start();
         }

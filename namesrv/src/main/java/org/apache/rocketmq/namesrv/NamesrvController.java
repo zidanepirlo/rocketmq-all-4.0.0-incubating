@@ -48,7 +48,7 @@ public class NamesrvController {
     private final RouteInfoManager routeInfoManager;
 
     private RemotingServer remotingServer;
-
+    //监听broker通道变化情况
     private BrokerHousekeepingService brokerHousekeepingService;
 
     private ExecutorService remotingExecutor;
@@ -72,6 +72,7 @@ public class NamesrvController {
 
         this.kvConfigManager.load();
 
+        //初始化netty boss，slave线程池
         this.remotingServer = new NettyRemotingServer(this.nettyServerConfig, this.brokerHousekeepingService);
 
         this.remotingExecutor =
@@ -98,7 +99,9 @@ public class NamesrvController {
         return true;
     }
 
+    //注册 NettyServerHandler 业务处理类
     private void registerProcessor() {
+
         if (namesrvConfig.isClusterTest()) {
 
             this.remotingServer.registerDefaultProcessor(new ClusterTestRequestProcessor(this, namesrvConfig.getProductEnvName()),
@@ -110,6 +113,7 @@ public class NamesrvController {
     }
 
     public void start() throws Exception {
+        //启动netty ServerBootstrap
         this.remotingServer.start();
     }
 

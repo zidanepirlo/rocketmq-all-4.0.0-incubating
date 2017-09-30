@@ -141,9 +141,10 @@ public class RemotingCommand {
     }
 
     public static RemotingCommand decode(final ByteBuffer byteBuffer) {
+
         int length = byteBuffer.limit();
         int oriHeaderLen = byteBuffer.getInt();
-        int headerLength = getHeaderLength(oriHeaderLen);
+        int headerLength = getHeaderLength(oriHeaderLen);//oriHeaderLen & 0xFFFFFF
 
         byte[] headerData = new byte[headerLength];
         byteBuffer.get(headerData);

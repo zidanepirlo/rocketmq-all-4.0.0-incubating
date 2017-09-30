@@ -32,13 +32,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.rocketmq.remoting.ChannelEventListener;
 import org.apache.rocketmq.remoting.InvokeCallback;
 import org.apache.rocketmq.remoting.RPCHook;
-import org.apache.rocketmq.remoting.common.Pair;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.apache.rocketmq.remoting.common.SemaphoreReleaseOnlyOnce;
-import org.apache.rocketmq.remoting.common.ServiceThread;
+import org.apache.rocketmq.remoting.common.*;
 import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
 import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
 import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
@@ -59,6 +57,8 @@ public abstract class NettyRemotingAbstract {
 
     protected final HashMap<Integer/* request code */, Pair<NettyRequestProcessor, ExecutorService>> processorTable =
         new HashMap<Integer, Pair<NettyRequestProcessor, ExecutorService>>(64);
+
+    //线程扫描broKer连接，断开，过期等时间，并做出相应的处理，采用阻塞队列存放broker所发生的事件
     protected final NettyEventExecuter nettyEventExecuter = new NettyEventExecuter();
 
     protected Pair<NettyRequestProcessor, ExecutorService> defaultRequestProcessor;
@@ -95,6 +95,11 @@ public abstract class NettyRemotingAbstract {
         final Pair<NettyRequestProcessor, ExecutorService> pair = null == matched ? this.defaultRequestProcessor : matched;
         final int opaque = cmd.getOpaque();
 
+        //add by yuan
+        PLOG.info("pair is "+ RequestCodeEnum.getDesc(cmd.getCode()));
+
+        //end
+
         if (pair != null) {
             Runnable run = new Runnable() {
                 @Override
@@ -115,7 +120,12 @@ public abstract class NettyRemotingAbstract {
                                 response.setOpaque(opaque);
                                 response.markResponseType();
                                 try {
+                                    //send msg to broker
                                     ctx.writeAndFlush(response);
+                                    PLOG.info("namesrv send response:");
+                                    PLOG.info(response.toString());
+                                    PLOG.info("body:");
+                                    PLOG.info(null == response.getBody()? "null":new String(response.getBody()));
                                 } catch (Throwable e) {
                                     PLOG.error("process request over, but response failed", e);
                                     PLOG.error(cmd.toString());
@@ -405,6 +415,7 @@ public abstract class NettyRemotingAbstract {
         public void run() {
             PLOG.info(this.getServiceName() + " service started");
 
+            //抽象类调用子类重写的方法
             final ChannelEventListener listener = NettyRemotingAbstract.this.getChannelEventListener();
 
             while (!this.isStopped()) {

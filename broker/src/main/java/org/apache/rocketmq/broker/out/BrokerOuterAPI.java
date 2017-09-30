@@ -153,6 +153,10 @@ public class BrokerOuterAPI {
         RegisterBrokerBody requestBody = new RegisterBrokerBody();
         requestBody.setTopicConfigSerializeWrapper(topicConfigWrapper);
         requestBody.setFilterServerList(filterServerList);
+
+        log.info("requestBody json");
+        log.info(requestBody.toJson(true));
+
         request.setBody(requestBody.encode());
 
         if (oneway) {

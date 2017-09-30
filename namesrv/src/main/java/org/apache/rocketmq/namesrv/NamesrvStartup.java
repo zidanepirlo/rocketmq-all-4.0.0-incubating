@@ -115,6 +115,7 @@ public class NamesrvStartup {
             final NamesrvController controller = new NamesrvController(namesrvConfig, nettyServerConfig);
 
             // remember all configs to prevent discard
+            //merge properties
             controller.getConfiguration().registerConfig(properties);
 
             boolean initResult = controller.initialize();
@@ -122,7 +123,7 @@ public class NamesrvStartup {
                 controller.shutdown();
                 System.exit(-3);
             }
-
+            //使用mqshutdown停止mq的时候调用
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 private volatile boolean hasShutdown = false;
                 private AtomicInteger shutdownTimes = new AtomicInteger(0);
@@ -142,6 +143,7 @@ public class NamesrvStartup {
                 }
             }, "ShutdownHook"));
 
+            //绑定netty业务处理事件
             controller.start();
 
             String tip = "The Name Server boot success. serializeType=" + RemotingCommand.getSerializeTypeConfigInThisServer();
