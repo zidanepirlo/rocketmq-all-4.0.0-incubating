@@ -16,11 +16,13 @@
  */
 package org.apache.rocketmq.remoting.netty;
 
+import com.alibaba.fastjson.JSON;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import java.net.SocketAddress;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -37,6 +39,7 @@ import org.apache.rocketmq.remoting.ChannelEventListener;
 import org.apache.rocketmq.remoting.InvokeCallback;
 import org.apache.rocketmq.remoting.RPCHook;
 import org.apache.rocketmq.remoting.common.*;
+import org.apache.rocketmq.remoting.entity.Student;
 import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
 import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
 import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
@@ -89,7 +92,6 @@ public abstract class NettyRemotingAbstract {
             }
         }
     }
-
     public void processRequestCommand(final ChannelHandlerContext ctx, final RemotingCommand cmd) {
         final Pair<NettyRequestProcessor, ExecutorService> matched = this.processorTable.get(cmd.getCode());
         final Pair<NettyRequestProcessor, ExecutorService> pair = null == matched ? this.defaultRequestProcessor : matched;
@@ -120,14 +122,14 @@ public abstract class NettyRemotingAbstract {
                                 response.setOpaque(opaque);
                                 response.markResponseType();
                                 try {
-
-                                    ctx.writeAndFlush(response);
                                     //send msg to broker for ,add by yuan for test
                                     PLOG.info("namesrv send response:");
                                     PLOG.info(response.toString());
                                     PLOG.info("body:");
+//                                    response.setBody(JSON.toJSONString(new Student("yuanqing",36), false).getBytes(Charset.forName("UTF-8")));
                                     PLOG.info(null == response.getBody()? "null":new String(response.getBody()));
                                     //end
+                                    ctx.writeAndFlush(response);
                                 } catch (Throwable e) {
                                     PLOG.error("process request over, but response failed", e);
                                     PLOG.error(cmd.toString());
