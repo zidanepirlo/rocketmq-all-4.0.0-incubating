@@ -96,7 +96,7 @@ public abstract class NettyRemotingAbstract {
         final int opaque = cmd.getOpaque();
 
         //add by yuan
-        PLOG.info("pair is "+ RequestCodeEnum.getDesc(cmd.getCode()));
+        PLOG.info("REQUEST_COMMAND pair is "+ RequestCodeEnum.getDesc(cmd.getCode()));
 
         //end
 
@@ -191,6 +191,7 @@ public abstract class NettyRemotingAbstract {
     }
 
     public void processResponseCommand(ChannelHandlerContext ctx, RemotingCommand cmd) {
+
         final int opaque = cmd.getOpaque();
         final ResponseFuture responseFuture = responseTable.get(opaque);
         if (responseFuture != null) {

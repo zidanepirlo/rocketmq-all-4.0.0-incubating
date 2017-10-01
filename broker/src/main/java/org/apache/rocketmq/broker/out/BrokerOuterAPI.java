@@ -157,13 +157,13 @@ public class BrokerOuterAPI {
         request.setBody(requestBody.encode());
 
         //add by yuan for test
+        log.info("Opaque :"+String.valueOf(request.getOpaque()));
         log.info(RequestCodeEnum.getDesc(RequestCode.REGISTER_BROKER));
         log.info("customHeader:");
         log.info(request.readCustomHeader().toString());
         log.info("requestBody json:");
         log.info(requestBody.toJson(true));
         //end
-
 
         if (oneway) {
             try {
@@ -174,7 +174,16 @@ public class BrokerOuterAPI {
             return null;
         }
 
+        //broker注册，同步返回nameserver响应信息
         RemotingCommand response = this.remotingClient.invokeSync(namesrvAddr, request, timeoutMills);
+        // add by yuan for test
+        log.info("Opaque :"+String.valueOf(request.getOpaque()));
+        log.info(" response REGISTER_BROKER");
+        if(null!=response.getBody()){
+            String body = new String(response.getBody());
+            log.info("reponse body = {}", body);
+        }
+        //end
         assert response != null;
         switch (response.getCode()) {
             case ResponseCode.SUCCESS: {
