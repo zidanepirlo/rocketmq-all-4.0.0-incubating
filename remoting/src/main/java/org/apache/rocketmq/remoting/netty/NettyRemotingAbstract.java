@@ -194,6 +194,10 @@ public abstract class NettyRemotingAbstract {
 
     public void processResponseCommand(ChannelHandlerContext ctx, RemotingCommand cmd) {
 
+        //add by yuan for test
+        PLOG.info("RESPONSE_COMMAND "+ RequestCodeEnum.getDesc(cmd.getCode()));
+        //end
+
         final int opaque = cmd.getOpaque();
         final ResponseFuture responseFuture = responseTable.get(opaque);
         if (responseFuture != null) {
