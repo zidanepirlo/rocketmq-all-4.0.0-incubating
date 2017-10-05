@@ -416,9 +416,11 @@ public class RemotingCommand {
         // 3> body data length
         length += bodyLength;
 
+        // allocate( 4 + len(RemotingCommand) )
         ByteBuffer result = ByteBuffer.allocate(4 + length - bodyLength);
 
-        // length
+        // length = 4 + len(RemotingCommand) + len(RemotingCommand.body)
+        // int 4个字节
         result.putInt(length);
 
         // header length
