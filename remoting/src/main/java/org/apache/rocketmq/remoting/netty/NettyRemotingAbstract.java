@@ -123,17 +123,17 @@ public abstract class NettyRemotingAbstract {
                                 response.markResponseType();
                                 try {
                                     //send msg to broker for ,add by yuan for test
-                                    PLOG.info("namesrv send response:");
-                                    PLOG.info(response.toString());
-                                    PLOG.info("body:");
+//                                    PLOG.info("namesrv send response:");
+//                                    PLOG.info(response.toString());
+//                                    PLOG.info("body:");
 //                                    response.setBody(JSON.toJSONString(new Student("yuanqing",36), false).getBytes(Charset.forName("UTF-8")));
-                                    PLOG.info(null == response.getBody()? "null":new String(response.getBody()));
+//                                    PLOG.info(null == response.getBody()? "null":new String(response.getBody()));
                                     //end
                                     ctx.writeAndFlush(response);
                                 } catch (Throwable e) {
                                     PLOG.error("process request over, but response failed", e);
-                                    PLOG.error(cmd.toString());
-                                    PLOG.error(response.toString());
+//                                    PLOG.error(cmd.toString());
+//                                    PLOG.error(response.toString());
                                 }
                             } else {
 
