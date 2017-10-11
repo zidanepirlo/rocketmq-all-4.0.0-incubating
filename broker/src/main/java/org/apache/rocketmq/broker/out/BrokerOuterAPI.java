@@ -154,15 +154,16 @@ public class BrokerOuterAPI {
         RegisterBrokerBody requestBody = new RegisterBrokerBody();
         requestBody.setTopicConfigSerializeWrapper(topicConfigWrapper);
         requestBody.setFilterServerList(filterServerList);
+        //body 转jason，再做byte编码
         request.setBody(requestBody.encode());
 
         //add by yuan for test
-        log.info("Opaque :"+String.valueOf(request.getOpaque()));
-        log.info(RequestCodeEnum.getDesc(RequestCode.REGISTER_BROKER));
-        log.info("customHeader:");
-        log.info(request.readCustomHeader().toString());
-        log.info("requestBody json:");
-        log.info(requestBody.toJson(true));
+//        log.info("Opaque :"+String.valueOf(request.getOpaque()));
+//        log.info(RequestCodeEnum.getDesc(RequestCode.REGISTER_BROKER));
+//        log.info("customHeader:");
+//        log.info(request.readCustomHeader().toString());
+//        log.info("requestBody json:");
+//        log.info(requestBody.toJson(true));
         //end
 
         if (oneway) {
