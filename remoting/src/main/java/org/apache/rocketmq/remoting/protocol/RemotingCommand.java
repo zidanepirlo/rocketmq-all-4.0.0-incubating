@@ -455,11 +455,13 @@ public class RemotingCommand {
 
     @JSONField(serialize = false)
     public RemotingCommandType getType() {
-        if (this.isResponseType()) {
-            return RemotingCommandType.RESPONSE_COMMAND;
-        }
+//        if (this.isResponseType()) {
+//            return RemotingCommandType.RESPONSE_COMMAND;
+//        }
+//
+//        return RemotingCommandType.REQUEST_COMMAND;
 
-        return RemotingCommandType.REQUEST_COMMAND;
+       return this.isResponseType()? RemotingCommandType.RESPONSE_COMMAND:RemotingCommandType.REQUEST_COMMAND;
     }
 
     @JSONField(serialize = false)
