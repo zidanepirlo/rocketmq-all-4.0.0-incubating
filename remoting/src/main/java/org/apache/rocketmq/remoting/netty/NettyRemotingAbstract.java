@@ -196,7 +196,7 @@ public abstract class NettyRemotingAbstract {
 
         //add by yuan for test
 //        PLOG.info("RESPONSE_COMMAND "+ RequestCodeEnum.getDesc(cmd.getCode()));
-        System.out.println("RESPONSE_COMMAND "+ RequestCodeEnum.getDesc(cmd.getCode()));
+//        System.out.println("RESPONSE_COMMAND "+ RequestCodeEnum.getDesc(cmd.getCode()));
         //end
 
         final int opaque = cmd.getOpaque();
