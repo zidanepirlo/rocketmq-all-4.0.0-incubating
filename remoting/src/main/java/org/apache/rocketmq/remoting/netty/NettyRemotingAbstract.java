@@ -307,6 +307,7 @@ public abstract class NettyRemotingAbstract {
                 }
             });
 
+            //wait for processResponseCommand get response and responseFuture.putResponse(cmd) countDownLatch.countDown()
             RemotingCommand responseCommand = responseFuture.waitResponse(timeoutMillis);
             if (null == responseCommand) {
                 if (responseFuture.isSendRequestOK()) {
