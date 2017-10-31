@@ -166,6 +166,7 @@ public class BrokerOuterAPI {
 //        log.info(requestBody.toJson(true));
         //end
 
+        //快速调用方式，不需要返回值
         if (oneway) {
             try {
                 this.remotingClient.invokeOneway(namesrvAddr, request, timeoutMills);
